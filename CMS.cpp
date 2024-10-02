@@ -8,24 +8,31 @@ private:
     map<string, int> menuItems;
     vector<string> orders;
     map<string, int> orderQuantities;
+    
+    string toLower(const string& str) {
+        string lowerStr = str;
+        transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower);
+        return lowerStr;
+    }
+
 public:
     Cafe() {
         menuItems = {
-            {"Cold Coffee", 50},
-            {"Hazelnut Coffee", 100},
-            {"Hot Coffee", 20},
-            {"Chocolate Shake", 60},
-            {"Brownie Shake", 70},
-            {"Butterscotch Shake", 50},
-            {"Onion Pizza", 80},
-            {"Sweet Corn Pizza", 80},
-            {"OTC Pizza", 150},
-            {"Steamed Momos", 70},
-            {"Fried Momos", 80},
-            {"Tandoori Momos", 100},
-            {"Red Sauce Pasta", 80},
-            {"White Sauce Pasta", 70},
-            {"Pink Sauce Pasta", 150}
+            {"cold coffee", 50},
+            {"hazelnut coffee", 100},
+            {"hot coffee", 20},
+            {"chocolate shake", 60},
+            {"brownie shake", 70},
+            {"butterscotch shake", 50},
+            {"onion pizza", 80},
+            {"sweet corn pizza", 80},
+            {"otc pizza", 150},
+            {"steamed momos", 70},
+            {"fried momos", 80},
+            {"tandoori momos", 100},
+            {"red sauce pasta", 80},
+            {"white sauce pasta", 70},
+            {"pink sauce pasta", 150}
         };
     }
 
@@ -65,46 +72,43 @@ public:
     void takeOrder() {
         string item;
         char more = 'y';
-        if(!orders.empty()){
+        if (!orders.empty()) {
             char p;
             show:
-            cout<<"Press A to add new items to orders\nPress V to view old orders\nPress B to go back\n";
-            cin>>p;
-            if(p=='A' || p=='a'){
+            cout << "Press A to add new items to orders\nPress V to view old orders\nPress B to go back\n";
+            cin >> p;
+            if (p == 'A' || p == 'a') {
                 goto Take;
-            }
-            else if(p=='v'|| p=='V'){
-                cout<<"Your Orders Are -\n";
-                for(int i=0;i<orders.size();i++){
-                    cout<<i+1<<". "<<orders[i]<<endl;
+            } else if (p == 'v' || p == 'V') {
+                cout << "Your Orders Are -\n";
+                for (int i = 0; i < orders.size(); i++) {
+                    cout << i + 1 << ". " << orders[i] << endl;
                 }
                 int x;
-                cout<<"Press 0 to exit and 1 to continue\n";
-                cin>>x;
-                if(x==1){
-                goto show;
-                }
-                else if(x==0){
+                cout << "Press 0 to exit and 1 to continue\n";
+                cin >> x;
+                if (x == 1) {
+                    goto show;
+                } else if (x == 0) {
                     exit(0);
                 }
-            }
-            else if(p=='b'||p=='B'){
+            } else if (p == 'b' || p == 'B') {
                 display();
-            }
-            else if(p!='a'||p!='A'){
-                cout<<"Wrong Choice";
+            } else if (p != 'a' || p != 'A') {
+                cout << "Wrong Choice";
                 exit(0);
             }
-            }
+        }
         Take:
         while (more == 'y' || more == 'Y') {
             cout << "Enter your chosen item: ";
             cin.ignore();
             getline(cin, item);
+            string itemLower = toLower(item);
 
-            if (menuItems.find(item) != menuItems.end()) {
-                orders.push_back(item);
-                orderQuantities[item]++;
+            if (menuItems.find(itemLower) != menuItems.end()) {
+                orders.push_back(itemLower);
+                orderQuantities[itemLower]++;
                 cout << "Item added to order." << endl;
             } else {
                 cout << "Invalid item. Please choose from the menu." << endl;
@@ -159,8 +163,8 @@ int main() {
     Cafe c;
     cout << "WELCOME TO THE A&A RESTAURANT\n";
     cout << "------------------------------\n";
-    while(1){
-    c.display();
+    while (1) {
+        c.display();
     }
     return 0;
 }
